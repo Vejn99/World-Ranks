@@ -31,10 +31,3 @@ export interface CountryInterface {
   continents: string[]; // Continents the country belongs to
   borders: string[]; // Alpha-3 codes of neighboring countries
 }
-
-export interface CountryCtxValue {
-  countries: CountryInterface[];
-  loading: boolean;
-  error: string | null;
-  fetchCountries: () => void;
-}

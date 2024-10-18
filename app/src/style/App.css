@@ -1,0 +1,40 @@
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #1b1d1f;
+  color: #fff;
+}
+
+.app {
+  min-height: 100vh;
+  background-color: #1b1d1f;
+}
+
+.bg-img {
+  position: relative;
+  height: 40vh;
+  background-image: url("../../public/images/hero-image-wr.jpg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+
+.logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.txt-dark {
+  color: #6c727f;
+}

@@ -1,0 +1,45 @@
+.inner {
+  position: absolute;
+  min-width: 95%;
+  left: 2.5%;
+  top: 35%;
+  background-color: #1b1d1f;
+  border: 1px solid #6c727f;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.right-list {
+  max-height: 500px;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.right-list::-webkit-scrollbar {
+  width: 0; /* Remove scrollbar space */
+  background: transparent; /* Optional: just in case */
+}
+
+.info-bar,
+.country-info-row {
+  display: grid;
+  grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+}
+
+.flag-img {
+  width: 100px;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.flag-img img {
+  width: 100px;
+  height: auto;
+  object-fit: contain;
+  border-radius: 5px;
+}

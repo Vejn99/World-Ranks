@@ -10,21 +10,27 @@ export const useApiData = () => {
 
   const fetchData = async () => {
     setLoading(true);
+    setError(null);
+
     try {
       const response = await fetch(countriesUrl);
       const data = await response.json();
 
       if (response.ok) {
-        setCountries(data);
+        setTimeout(() => {
+          setCountries(data);
+          setLoading(false);
+        }, 2000);
       } else {
+        setLoading(false);
         setError(`Request failed with status ${response.status}`);
       }
     } catch (err: any) {
-      setError(err.message);
-    } finally {
       setLoading(false);
+      setError(err.message);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);

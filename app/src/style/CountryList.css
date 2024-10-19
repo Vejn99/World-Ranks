@@ -1,6 +1,7 @@
 .inner {
   position: absolute;
-  min-width: 95%;
+  width: 95%;
+  min-height: 620px;
   left: 2.5%;
   top: 35%;
   background-color: #1b1d1f;
@@ -9,24 +10,43 @@
   padding: 20px;
 }
 
-.right-list {
-  max-height: 500px;
+.country-info {
+  max-height: 400px;
   overflow-y: auto;
   padding-right: 10px;
 }
 
-.right-list::-webkit-scrollbar {
-  width: 0; /* Remove scrollbar space */
-  background: transparent; /* Optional: just in case */
+.country-info::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.no-scroll {
+  overflow-y: hidden;
 }
 
 .info-bar,
 .country-info-row {
   display: grid;
-  grid-template-columns: 200px 1fr 1fr 1fr 1fr;
+  grid-template-columns: 150px 1fr 1fr 1fr 1fr;
   align-items: center;
   gap: 15px;
-  padding: 15px 0;
+  padding: 17px 5px;
+}
+
+.info-bar h5 {
+  margin: 0;
+}
+
+.country-info-row {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.country-info-row:hover {
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: #6c727f;
 }
 
 .flag-img {

@@ -38,3 +38,24 @@ body,
 .txt-dark {
   color: #6c727f;
 }
+
+.txt-light {
+  color: #d2d5da;
+}
+
+.loading-container,
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  color: white;
+  background-color: #1b1d1f;
+}
+
+.loading-container p,
+.error-container p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}

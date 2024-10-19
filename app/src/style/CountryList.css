@@ -63,3 +63,37 @@
   object-fit: contain;
   border-radius: 5px;
 }
+
+.search-bar input[type="text"] {
+  width: 400px;
+  border-radius: 14px;
+  color: #6c727f;
+  background-color: #282b30;
+  padding: 15px;
+  padding-left: 40px;
+  outline: none;
+}
+
+.search-input:focus {
+  border: none;
+}
+
+.search-input:not(:focus) {
+  border: none;
+}
+
+.search-bar input[type="text"]::placeholder {
+  color: #6c727f;
+}
+
+.search-bar-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  pointer-events: none;
+}

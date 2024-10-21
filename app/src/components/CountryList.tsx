@@ -7,26 +7,61 @@ import { CountryInterface } from "../hooks/CountryInterface";
 export const CountryList = () => {
   const { countries, loading, error } = useApiData();
   const [searchTerm, setSearchTerm] = useState("");
+  const [sortType, setSortType] = useState("population");
+  const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
+  const [isUNMember, setIsUNMember] = useState(false);
+  const [isIndependent, setIsIndependent] = useState(false);
 
   const handleSearchChange = (event: any) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleSortChange = (event: any) => {
+    setSortType(event.target.value);
+  };
+
+  const handleRegionChange = (event: any) => {
+    const { value, checked } = event.target;
+    if (checked) {
+      setSelectedRegions((prev) => [...prev, value]);
+    } else {
+      setSelectedRegions((prev) => prev.filter((region) => region !== value));
+    }
   };
 
   const filteredCountries = countries.filter((country: CountryInterface) => {
     const nameMatch = country.name.common
       .toLowerCase()
       .includes(searchTerm.toLowerCase());
-
-    const regionMatch = country.region
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
+    const regionMatch =
+      selectedRegions.length === 0 || selectedRegions.includes(country.region);
     const subregionMatch = country.subregion
       ?.toLowerCase()
       .includes(searchTerm.toLowerCase());
 
-    return nameMatch || regionMatch || subregionMatch;
+    const unMemberMatch = !isUNMember || country.unMember;
+    const independentMatch = !isIndependent || country.independent;
+
+    return (
+      (nameMatch || subregionMatch) &&
+      regionMatch &&
+      unMemberMatch &&
+      independentMatch
+    );
   });
+
+  const sortedFilteredCountries = [...filteredCountries].sort(
+    (countryA, countryB) => {
+      if (sortType === "name") {
+        return countryA.name.common.localeCompare(countryB.name.common);
+      } else if (sortType === "population") {
+        return countryB.population - countryA.population;
+      } else if (sortType === "area") {
+        return countryB.area - countryA.area;
+      }
+      return 0;
+    }
+  );
 
   return (
     <>
@@ -55,9 +90,93 @@ export const CountryList = () => {
           </div>
           <div className="d-flex align-items-center justify-content-between mt-5">
             <div className="left-filter w-25 d-flex txt-dark">
-              <p>Sort by</p>
-              <p>region</p>
-              <p>status</p>
+              <div className="sort-by">
+                <label htmlFor="sort-select">Sort by:</label>
+                <select
+                  id="sort-select"
+                  value={sortType}
+                  onChange={handleSortChange}
+                >
+                  <option value="population">Population</option>
+                  <option value="name">Name</option>
+                  <option value="area">Area (km²)</option>
+                </select>
+              </div>
+              <div className="region-filters">
+                <p>Region</p>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Americas"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Americas")}
+                  />
+                  Americas
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Antarctic"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Antarctic")}
+                  />
+                  Antarctic
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Africa"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Africa")}
+                  />
+                  Africa
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Asia"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Asia")}
+                  />
+                  Asia
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Europe"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Europe")}
+                  />
+                  Europe
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    value="Oceania"
+                    onChange={handleRegionChange}
+                    checked={selectedRegions.includes("Oceania")}
+                  />
+                  Oceania
+                </label>
+              </div>
+              <div className="status-filters">
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isUNMember}
+                    onChange={() => setIsUNMember(!isUNMember)}
+                  />
+                  Show only UN member countries
+                </label>
+                <label>
+                  <input
+                    type="checkbox"
+                    checked={isIndependent}
+                    onChange={() => setIsIndependent(!isIndependent)}
+                  />
+                  Show only independent countries
+                </label>
+              </div>
             </div>
             <div className="right-list w-75">
               <div className="info-bar txt-dark">
@@ -90,23 +209,21 @@ export const CountryList = () => {
                   </div>
                 ) : (
                   <>
-                    {filteredCountries.length > 0 ? (
-                      (searchTerm ? filteredCountries : countries).map(
-                        (country, index) => (
-                          <div
-                            className="country-info-row txt-light"
-                            key={index}
-                          >
-                            <div className="flag-img">
-                              <img src={country.flags.svg} alt="country flag" />
-                            </div>
-                            <h4>{country.name.common}</h4>
-                            <p>{country.population.toLocaleString()}</p>
-                            <p>{country.area.toLocaleString()}</p>
-                            <p>{country.region}</p>
+                    {sortedFilteredCountries.length > 0 ? (
+                      sortedFilteredCountries.map((country, index) => (
+                        <div className="country-info-row txt-light" key={index}>
+                          <div className="flag-img">
+                            <img
+                              src={country.flags.svg}
+                              alt={`${country.name.common} flag`}
+                            />
                           </div>
-                        )
-                      )
+                          <h4>{country.name.common}</h4>
+                          <p>{country.population.toLocaleString()}</p>
+                          <p>{country.area.toLocaleString()}</p>
+                          <p>{country.region}</p>
+                        </div>
+                      ))
                     ) : (
                       <h3 className="d-flex justify-content-center mt-5">
                         No Countries found

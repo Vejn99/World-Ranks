@@ -7,7 +7,8 @@ import { CountryInterface } from "../hooks/CountryInterface";
 export const CountryList = () => {
   const { countries, loading, error } = useApiData();
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortType, setSortType] = useState("population");
+  const [sortType, setSortType] = useState("Population");
+  const [dropdownActive, setDropdownActive] = useState(false);
   const [selectedRegions, setSelectedRegions] = useState<string[]>([]);
   const [isUNMember, setIsUNMember] = useState(false);
   const [isIndependent, setIsIndependent] = useState(false);
@@ -16,8 +17,9 @@ export const CountryList = () => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSortChange = (event: any) => {
-    setSortType(event.target.value);
+  const handleSelectOption = (option: string) => {
+    setSortType(option);
+    setDropdownActive(false);
   };
 
   const handleRegionChange = (event: any) => {
@@ -52,11 +54,11 @@ export const CountryList = () => {
 
   const sortedFilteredCountries = [...filteredCountries].sort(
     (countryA, countryB) => {
-      if (sortType === "name") {
-        return countryA.name.common.localeCompare(countryB.name.common);
-      } else if (sortType === "population") {
+      if (sortType === "Population") {
         return countryB.population - countryA.population;
-      } else if (sortType === "area") {
+      } else if (sortType === "Name") {
+        return countryA.name.common.localeCompare(countryB.name.common);
+      } else if (sortType === "Area (km²)") {
         return countryB.area - countryA.area;
       }
       return 0;
@@ -89,20 +91,38 @@ export const CountryList = () => {
             </div>
           </div>
           <div className="d-flex align-items-center justify-content-between mt-5">
-            <div className="left-filter w-25 d-flex txt-dark">
-              <div className="sort-by">
-                <label htmlFor="sort-select">Sort by:</label>
-                <select
-                  id="sort-select"
-                  value={sortType}
-                  onChange={handleSortChange}
-                >
-                  <option value="population">Population</option>
-                  <option value="name">Name</option>
-                  <option value="area">Area (km²)</option>
-                </select>
+            <div className="left-filter w-25 d-flex flex-column txt-dark">
+              <div className="sort-by mb-5">
+                <div className="selectbox">
+                  <h6>Sort by</h6>
+
+                  <div
+                    className={`dropdown ${dropdownActive ? "active" : ""}`}
+                    onClick={() => setDropdownActive(!dropdownActive)}
+                  >
+                    <div className="input-control">
+                      <input
+                        type="text"
+                        className="textBox"
+                        value={sortType}
+                        readOnly
+                        placeholder="Sort by"
+                      />
+                    </div>
+                    <div className={`option ${dropdownActive ? "show" : ""}`}>
+                      {["Population", "Name", "Area (km²)"].map((option) => (
+                        <div
+                          key={option}
+                          onClick={() => handleSelectOption(option)}
+                        >
+                          {option}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="region-filters">
+              <div className="region-filters my-5">
                 <p>Region</p>
                 <label>
                   <input

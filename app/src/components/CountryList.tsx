@@ -4,6 +4,15 @@ import { useApiData } from "../hooks/useApiData";
 import { useState } from "react";
 import { CountryInterface } from "../hooks/CountryInterface";
 
+const regions = [
+  "Americas",
+  "Antarctic",
+  "Africa",
+  "Asia",
+  "Europe",
+  "Oceania",
+];
+
 export const CountryList = () => {
   const { countries, loading, error } = useApiData();
   const [searchTerm, setSearchTerm] = useState("");
@@ -72,10 +81,10 @@ export const CountryList = () => {
           <img src="/images/Logo.svg" alt="Logo" />
         </div>
       </div>
-      <div className="container-fluid">
-        <div className="inner">
+      <div className="container-fluid ">
+        <div className="inner px-3">
           <div className="search-bar d-flex align-items-center justify-content-between txt-dark">
-            <p>Found {countries.length} countries</p>
+            <h4>Found {countries.length} countries</h4>
             <div className="search-bar-inner">
               <img
                 src="/images/Search.svg"
@@ -123,70 +132,36 @@ export const CountryList = () => {
                 </div>
               </div>
               <div className="region-filters my-5">
-                <p>Region</p>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Americas"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Americas")}
-                  />
-                  Americas
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Antarctic"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Antarctic")}
-                  />
-                  Antarctic
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Africa"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Africa")}
-                  />
-                  Africa
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Asia"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Asia")}
-                  />
-                  Asia
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Europe"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Europe")}
-                  />
-                  Europe
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    value="Oceania"
-                    onChange={handleRegionChange}
-                    checked={selectedRegions.includes("Oceania")}
-                  />
-                  Oceania
-                </label>
+                <h6>Region</h6>
+                <div className="region-grid">
+                  {regions.map((region) => (
+                    <label
+                      key={region}
+                      className={`region-label ${
+                        selectedRegions.includes(region) ? "selected" : ""
+                      }`}
+                    >
+                      <input
+                        type="checkbox"
+                        value={region}
+                        onChange={handleRegionChange}
+                        checked={selectedRegions.includes(region)}
+                        style={{ display: "none" }}
+                      />
+                      {region}
+                    </label>
+                  ))}
+                </div>
               </div>
               <div className="status-filters">
+                <h6>Status</h6>
                 <label>
                   <input
                     type="checkbox"
                     checked={isUNMember}
                     onChange={() => setIsUNMember(!isUNMember)}
                   />
-                  Show only UN member countries
+                  Member of the United Nations
                 </label>
                 <label>
                   <input
@@ -194,7 +169,7 @@ export const CountryList = () => {
                     checked={isIndependent}
                     onChange={() => setIsIndependent(!isIndependent)}
                   />
-                  Show only independent countries
+                  Independent
                 </label>
               </div>
             </div>

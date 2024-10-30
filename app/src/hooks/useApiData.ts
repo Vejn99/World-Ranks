@@ -20,7 +20,7 @@ export const useApiData = () => {
         setTimeout(() => {
           setCountries(data);
           setLoading(false);
-        }, 2000);
+        }, 1000);
       } else {
         setLoading(false);
         setError(`Request failed with status ${response.status}`);

@@ -8,6 +8,10 @@ body,
   color: #fff;
 }
 
+a {
+  text-decoration: none;
+}
+
 .app {
   min-height: 100vh;
   background-color: #1b1d1f;

@@ -1,0 +1,110 @@
+.country-detail {
+  position: absolute;
+  width: 40%;
+  height: auto;
+  left: 30%;
+  top: 35%;
+  background-color: #1b1d1f;
+  border: 2px solid #282b30;
+  border-radius: 10px;
+}
+
+.country-detail p {
+  margin: 0;
+}
+
+.country-detail .flag-img {
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.country-detail .flag-img img {
+  display: block;
+  width: 350px;
+  height: auto;
+  border-radius: 15px;
+}
+
+.country-detail .details {
+  height: auto;
+  margin-top: 200px;
+}
+
+.country-detail .details .name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.country-detail .details .population-area {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.country-detail .details .population-area div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  border-radius: 10px;
+  background-color: #282b30;
+  padding: 12px 20px;
+}
+
+.vertical-line {
+  width: 20px;
+  height: 20px;
+  background-color: red;
+}
+
+.border-rows {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 2px solid #282b30;
+  padding: 15px;
+}
+
+.border-last-row {
+  border-top: 2px solid #282b30;
+  padding: 15px;
+}
+
+.neighboring-countries {
+  display: flex; /* Enable flexbox */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 10px; /* Space between items (adjust as needed) */
+}
+
+.neighbor-country {
+  display: flex; /* Flex container for each country */
+  flex-direction: column;
+  align-items: center; /* Center items vertically */
+  min-width: 100px; /* Set a minimum width (adjust as needed) */
+  text-align: center; /* Center text */
+}
+
+.neighbor-country .img {
+  width: 120px;
+}
+
+.neighbor-country .img img {
+  object-fit: contain;
+  width: 100px;
+  height: 80px;
+}
+
+.logo-detail img {
+  cursor: pointer;
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.logo-detail img:hover {
+  transform: scale(1.05);
+  opacity: 0.9;
+}

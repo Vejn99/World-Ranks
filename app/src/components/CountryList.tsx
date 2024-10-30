@@ -3,6 +3,7 @@ import ReactLoading from "react-loading";
 import { useApiData } from "../hooks/useApiData";
 import { useState } from "react";
 import { CountryInterface } from "../hooks/CountryInterface";
+import { Link } from "react-router-dom";
 
 const regions = [
   "Americas",
@@ -188,7 +189,7 @@ export const CountryList = () => {
                 }`}
               >
                 {loading ? (
-                  <div className="loading-container">
+                  <div className="loading-container pb-5">
                     <ReactLoading
                       type="spinningBubbles"
                       color="#ffffff"
@@ -206,18 +207,23 @@ export const CountryList = () => {
                   <>
                     {sortedFilteredCountries.length > 0 ? (
                       sortedFilteredCountries.map((country, index) => (
-                        <div className="country-info-row txt-light" key={index}>
-                          <div className="flag-img">
-                            <img
-                              src={country.flags.svg}
-                              alt={`${country.name.common} flag`}
-                            />
+                        <Link
+                          to={`/country/${country.name.common}`}
+                          key={index}
+                        >
+                          <div className="country-info-row txt-light">
+                            <div className="flag-img">
+                              <img
+                                src={country.flags.svg}
+                                alt={`${country.name.common} flag`}
+                              />
+                            </div>
+                            <h4>{country.name.common}</h4>
+                            <p>{country.population.toLocaleString()}</p>
+                            <p>{country.area.toLocaleString()}</p>
+                            <p>{country.region}</p>
                           </div>
-                          <h4>{country.name.common}</h4>
-                          <p>{country.population.toLocaleString()}</p>
-                          <p>{country.area.toLocaleString()}</p>
-                          <p>{country.region}</p>
-                        </div>
+                        </Link>
                       ))
                     ) : (
                       <h3 className="d-flex justify-content-center mt-5">

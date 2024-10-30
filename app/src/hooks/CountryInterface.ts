@@ -29,5 +29,6 @@ export interface CountryInterface {
   languages: CountryLanguages; // Languages spoken in the country
   currencies: CountryCurrencies; // Currencies used
   continents: string[]; // Continents the country belongs to
-  borders: string[]; // Alpha-3 codes of neighboring countries
+  borders: string[]; // neighboring country codes
+  cca3: string; // three-letter country code
 }
